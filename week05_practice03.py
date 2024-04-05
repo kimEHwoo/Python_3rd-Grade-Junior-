@@ -1,30 +1,27 @@
-def babylonian_sqrt(num, precision=0.0001):
-    x = num
-    y = 1
-    while x - y > precision:
-        x = (x + y) / 2
-        y = num / x
+def babylonian_sqrt(num, precision = 0.0001):
+    x = num/2
+    while True:
+        new_x = (x+num/x)/2
+        if abs(new_x-x)<precision:
+            break
+        x = new_x
     return x
 
 def calculate_variance(data):
     n = len(data)
-    mean = sum(data) / n
-
-    # 각 데이터 포인트와 평균 간의 편차를 제곱한 값의 평균
-    sum_of_squares = sum((x - mean) ** 2 for x in data)
-    variance = sum_of_squares / n
-
+    mean = sum(data)/n
+    
+    sum_of_squares = sum((x-mean)**2 for x in data)
+    variance = sum_of_squares/n
     return variance
 
 def calculate_std_deviation(data):
     variance = calculate_variance(data)
-
-    # 분산의 제곱근을 계산하여 표준편차를 구함
     std_deviation = babylonian_sqrt(variance)
 
     return std_deviation
 
-grades = list(map(int, input("숫자를 입력하세요: ").split()))
+grades = list(map(int, input('숫자를 입력하세요: ').split()))
 
 print()
 print('===============================')
@@ -33,14 +30,12 @@ print('===============================')
 print()
 
 person = len(grades)
-average = sum(grades) / person
+average = sum(grades)/person
 
-# 분산 계산
 variance = calculate_variance(grades)
-# 표준편차 계산
-std_deviation = calculate_std_deviation(grades)
+deviation = calculate_std_deviation(grades)
 
-print(f"학생 수: {person}")
-print(f"평균 성적: {average:.2f}")
-print(f"분산: {variance:.4f}")
-print(f"표준편차: {std_deviation:.4f}")
+print(f"전체 수강생 수는 {person}명입니다.")
+print(f"평균은 {average}입니다.")
+print(f"분산은 {variance:.2f}입니다.")
+print(f"표준편차는 {deviation:.2f}입니다.")
